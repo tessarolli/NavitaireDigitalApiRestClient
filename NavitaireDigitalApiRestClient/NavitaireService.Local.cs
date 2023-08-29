@@ -22,7 +22,14 @@ public partial class NavitaireDigitalApiRestClient
 
     public Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken ct)
     {
-        return Task.FromResult(new HttpRequestMessage(HttpMethod.Get, BaseUrl));
+        if (string.IsNullOrEmpty(Config.BaseUrl))
+        {
+            throw new System.Exception("You have to initialize with builder.Services.AddNavitaireDigitalApiRestClient()");
+        }
+
+        BaseUrl = Config.BaseUrl;
+
+        return Task.FromResult(new HttpRequestMessage(HttpMethod.Get, Config.BaseUrl));
     }
 
 }

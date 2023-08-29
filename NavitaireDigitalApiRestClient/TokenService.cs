@@ -42,7 +42,7 @@ internal static class TokenService
         var stringContent = new StringContent(string.Empty, Encoding.UTF8, "application/json");
         stringContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        var message = new HttpRequestMessage(HttpMethod.Post, $"{client.BaseAddress}/f9/dotrez/api/nsk/v2/token") { Content = stringContent };
+        var message = new HttpRequestMessage(HttpMethod.Post, $"{Config.BaseUrl}/api/nsk/v2/token") { Content = stringContent };
 
         // Anonymous call to bypass authentication
         message.Options.Set(new HttpRequestOptionsKey<bool>("Anonymous"), true);
