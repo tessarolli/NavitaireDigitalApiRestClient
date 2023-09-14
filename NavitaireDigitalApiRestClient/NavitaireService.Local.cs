@@ -5,6 +5,19 @@ namespace NavitaireDigitalApi;
 
 public partial class NavitaireDigitalApiRestClient
 {
+    public NavitaireDigitalApiRestClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+        _settings = new Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
+     
+        if (string.IsNullOrEmpty(Config.BaseUrl))
+        {
+            throw new System.Exception("You have to initialize with builder.Services.AddNavitaireDigitalApiRestClient()");
+        }
+
+        BaseUrl = Config.BaseUrl;
+    }
+
     public Task PrepareRequestAsync(HttpClient client, HttpRequestMessage requestMessage, StringBuilder stringBuilder, CancellationToken ct)
     {
         return Task.CompletedTask;
@@ -22,13 +35,6 @@ public partial class NavitaireDigitalApiRestClient
 
     public Task<HttpRequestMessage> CreateHttpRequestMessageAsync(CancellationToken ct)
     {
-        if (string.IsNullOrEmpty(Config.BaseUrl))
-        {
-            throw new System.Exception("You have to initialize with builder.Services.AddNavitaireDigitalApiRestClient()");
-        }
-
-        BaseUrl = Config.BaseUrl;
-
         return Task.FromResult(new HttpRequestMessage(HttpMethod.Get, Config.BaseUrl));
     }
 

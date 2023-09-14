@@ -2,12 +2,10 @@
 <package>
   <metadata>
     <id>NavitaireDigitalApiRestClient</id>
-    <version>1.0.0</version>
     <authors>LuizTessarolli</authors>
     <owners>LuizTessarolli</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple rest client for accessing navitaire's digital api</description>
-    <releaseNotes>Initial release</releaseNotes>
     <copyright>MIT</copyright>
     
     <dependencies>
@@ -16,8 +14,11 @@
     
     <tags>Navitaire</tags>
     
-    <!-- Project URLs -->
     <projectUrl>https://github.com/tessarolli/NavitaireDigitalApiRestClient</projectUrl>
-    <!--<iconUrl>https://raw.githubusercontent.com/yourusername/yourrepository/master/icon.png</iconUrl>-->
   </metadata>
+  <files>
+    <file src="bin\Release\NavitaireDigitalApiRestClient.dll" target="lib\netstandard2.0" />
+    <file src="bin\Release\NavitaireDigitalApiRestClient.xml" target="lib\netstandard2.0" />
+    <file src="bin\Release\NavitaireDigitalApiRestClient.pdb" target="lib\netstandard2.0" />
+  </files>
 </package>
