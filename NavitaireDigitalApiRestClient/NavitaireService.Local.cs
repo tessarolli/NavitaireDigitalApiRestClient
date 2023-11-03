@@ -5,15 +5,21 @@ namespace NavitaireDigitalApi;
 
 public partial class NavitaireDigitalApiRestClient
 {
-    public NavitaireDigitalApiRestClient(HttpClient httpClient)
+    public NavitaireDigitalApiRestClient(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClient;
-        _settings = new Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
-     
+        if (httpClientFactory is null)
+        {
+            throw new ArgumentNullException(nameof(httpClientFactory));
+        }
+
         if (string.IsNullOrEmpty(Config.BaseUrl))
         {
             throw new System.Exception("You have to initialize with builder.Services.AddNavitaireDigitalApiRestClient()");
         }
+
+        _httpClient = httpClientFactory.CreateClient(Config.HttpClientName);
+
+        _settings = new Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
 
         BaseUrl = Config.BaseUrl;
     }
