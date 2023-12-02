@@ -31,7 +31,18 @@ public partial class NavitaireDigitalApiRestClient
 
     public async Task PrepareRequestAsync(HttpClient client, HttpRequestMessage requestMessage, string url, CancellationToken ct)
     {
-        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", await TokenService.GetTokenAsync(client));
+        if (Config.GetNavitairetokenAsyncDelegate is null)
+        {
+            throw new InvalidOperationException("You have to declare the getNavitaireTokenDelegate with builder.Services.AddNavitaireDigitalApiRestClient() before using this code.");
+        }
+
+        var token = await Config.GetNavitairetokenAsyncDelegate.Invoke();
+        if (string.IsNullOrEmpty(token))
+        {
+            throw new InvalidOperationException("The GetNavitaireTokenDelegate did not returned a valid value.");
+        }
+
+        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
 
     public Task ProcessResponseAsync(HttpClient client, HttpResponseMessage requestMessage, CancellationToken ct)

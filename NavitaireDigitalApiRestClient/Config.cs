@@ -15,4 +15,8 @@ internal static class Config
     /// </summary>
     public static string HttpClientName { get; set; } = "";
 
+    /// <summary>
+    /// Gets or Sets the Delegate for Resolving the necessary Navitaire session toke.
+    /// </summary>
+    public static Func<Task<string>>? GetNavitairetokenAsyncDelegate { get; set; } = null;
 }
