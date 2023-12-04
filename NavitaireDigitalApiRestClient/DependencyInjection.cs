@@ -4,7 +4,7 @@ namespace NavitaireDigitalApi
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddNavitaireDigitalApiRestClient(this IServiceCollection services, string baseUrl, string httpClientName = "", Func<Task<string>>? getNavitairetokenAsyncDelegate = null)
+        public static IServiceCollection AddNavitaireDigitalApiRestClient(this IServiceCollection services, string baseUrl, string httpClientName = "", Func<IServiceProvider, Task<string>>? getNavitairetokenAsyncDelegate = null)
         {
             if (string.IsNullOrWhiteSpace(baseUrl))
             {

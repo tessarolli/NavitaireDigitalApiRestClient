@@ -1,4 +1,6 @@
-﻿namespace NavitaireDigitalApi;
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace NavitaireDigitalApi;
 
 /// <summary>
 /// Internal class for storing in process configuration values.
@@ -18,5 +20,5 @@ internal static class Config
     /// <summary>
     /// Gets or Sets the Delegate for Resolving the necessary Navitaire session toke.
     /// </summary>
-    public static Func<Task<string>>? GetNavitairetokenAsyncDelegate { get; set; } = null;
+    public static Func<IServiceProvider, Task<string>>? GetNavitairetokenAsyncDelegate { get; set; } = null;
 }

@@ -1,11 +1,14 @@
-﻿using System.Net.Http.Headers;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace NavitaireDigitalApi;
 
 public partial class NavitaireDigitalApiRestClient
 {
-    public NavitaireDigitalApiRestClient(IHttpClientFactory httpClientFactory)
+    private readonly IServiceProvider _services;
+
+    public NavitaireDigitalApiRestClient(IServiceProvider services, IHttpClientFactory httpClientFactory)
     {
         if (httpClientFactory is null)
         {
@@ -18,6 +21,8 @@ public partial class NavitaireDigitalApiRestClient
         }
 
         _httpClient = httpClientFactory.CreateClient(Config.HttpClientName);
+
+        _services = services ?? throw new ArgumentNullException(nameof(services));
 
         _settings = new Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings, true);
 
@@ -36,7 +41,7 @@ public partial class NavitaireDigitalApiRestClient
             throw new InvalidOperationException("You have to declare the getNavitaireTokenDelegate with builder.Services.AddNavitaireDigitalApiRestClient() before using this code.");
         }
 
-        var token = await Config.GetNavitairetokenAsyncDelegate.Invoke();
+        var token = await Config.GetNavitairetokenAsyncDelegate.Invoke(_services);
         if (string.IsNullOrEmpty(token))
         {
             throw new InvalidOperationException("The GetNavitaireTokenDelegate did not returned a valid value.");

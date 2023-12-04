@@ -9,7 +9,7 @@
   <PropertyGroup>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <Version>1.0.7</Version>
+    <Version>1.0.9</Version>
     <Title>Navitaire Digital Api Rest Client</Title>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
